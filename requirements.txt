@@ -8,7 +8,3 @@ pandas
 numpy
 torch
 sentence-transformers
-
-
-
-
