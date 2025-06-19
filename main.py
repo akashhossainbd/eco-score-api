@@ -1,5 +1,3 @@
-# main.py
-
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 import joblib
@@ -16,9 +14,10 @@ from sentence_transformers import util
 eco_model = joblib.load("eco_model.pkl")
 eco_vectorizer = joblib.load("eco_vectorizer.pkl")
 
-# Load sentence transformer model (force CPU mode for Render.com)
+# Load sentence transformer model
 with open("sentence_transformer_model.pkl", "rb") as f:
-    rec_model = pickle.load(f, map_location=torch.device("cpu"))
+    rec_model = pickle.load(f)  # ✅ FIXED: removed map_location
+rec_model = rec_model.to("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load product embeddings
 with open("product_embeddings.pkl", "rb") as f:
