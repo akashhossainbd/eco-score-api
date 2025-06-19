@@ -16,10 +16,9 @@ from sentence_transformers import util
 eco_model = joblib.load("eco_model.pkl")
 eco_vectorizer = joblib.load("eco_vectorizer.pkl")
 
-# Load sentence transformer model
+# Load sentence transformer model (force CPU mode for Render.com)
 with open("sentence_transformer_model.pkl", "rb") as f:
-    rec_model = pickle.load(f)
-rec_model = rec_model.to("cuda" if torch.cuda.is_available() else "cpu")
+    rec_model = pickle.load(f, map_location=torch.device("cpu"))
 
 # Load product embeddings
 with open("product_embeddings.pkl", "rb") as f:
