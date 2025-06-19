@@ -14,10 +14,9 @@ from sentence_transformers import util
 eco_model = joblib.load("eco_model.pkl")
 eco_vectorizer = joblib.load("eco_vectorizer.pkl")
 
-# Load sentence transformer model
+# ✅ Load sentence transformer model with CPU mapping
 with open("sentence_transformer_model.pkl", "rb") as f:
-    rec_model = pickle.load(f)  # ✅ FIXED: removed map_location
-rec_model = rec_model.to("cuda" if torch.cuda.is_available() else "cpu")
+    rec_model = torch.load(f, map_location=torch.device("cpu"))
 
 # Load product embeddings
 with open("product_embeddings.pkl", "rb") as f:
